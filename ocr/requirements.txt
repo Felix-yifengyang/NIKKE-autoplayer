@@ -1,0 +1,8 @@
+opencv-python
+pyautogui
+pillow
+numpy
+paddleocr
+shapely
+pyclipper
+setuptools
