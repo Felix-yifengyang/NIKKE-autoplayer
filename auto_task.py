@@ -24,25 +24,23 @@ def gain_diamond():
 
 def gain_rewards(arena_shop_task):
     while True:
-        # 仓库收米
-        if my_player.exist(['shop']):
-            my_player.find_touch_skewing(['shop'], 90, 104)
-            my_player.find_touch(['destroy'])
+        # 付费商店每日,每周,每月钻石
+        if my_player.exist(['pay_shop']):  # 判断是否找得到付费商店
+            my_player.find_touch(['pay_shop'])  # 点击付费商店
+            time.sleep(my_player.interval)  # 等待2.5s
+            if my_player.exist(["restrict"]):  # 查看是否有年龄限制
+                my_player.find_touch_skewing(['restrict'], 90, 110)  # 点击已成年 # distance需要修改
+                my_player.find_touch(['confirm_10'])  # 点击确认
 
-            if my_player.exist(['start_destroy']):
-                my_player.find_touch(['start_destroy', 'REWARD'])
+            my_player.find_touch(['gift'])
+            my_player.find_touch_skewing(['everyday'], 0, 120)
+            gain_diamond()
+            my_player.find_touch_skewing(['everyweek'], 0, 240)
+            gain_diamond()
+            my_player.find_touch_skewing(['everyweek'], 0, 360)
+            gain_diamond()
+            my_player.find_touch(['home'])
 
-            my_player.find_touch(['cancel', 'gain_reward', 'REWARD_2', 'REWARD', 'lobby'])
-        # 友情点
-        if my_player.exist(['friend']):
-            my_player.find_touch(['friend', 'give', 'confirm', 'close'])
-        # 邮箱
-        if my_player.exist(['mail']):
-            my_player.find_touch(['mail'])
-            time.sleep(my_player.interval)
-            my_player.find_touch(['gain_mail'])
-            time.sleep(my_player.interval)
-            my_player.find_touch(['REWARD', 'close_3'])
         # 商店每日免费物品
         if my_player.exist(['shop']):
             my_player.find_touch(['shop', '0'])
@@ -59,22 +57,27 @@ def gain_rewards(arena_shop_task):
                 my_player.find_touch(['buy', 'REWARD'])
             my_player.find_touch(['home', 'home'])
             time.sleep(my_player.interval)
-        # 付费商店每日,每周,每月钻石
-        if my_player.exist(['pay_shop']):
-            my_player.find_touch(['pay_shop'])
-            time.sleep(my_player.interval)
-            if my_player.exist(["restrict"]):
-                my_player.find_touch_skewing(['restrict'], 90, 110)
-                my_player.find_touch(['confirm_10'])
 
-            my_player.find_touch(['gift'])
-            my_player.find_touch_skewing(['everyday'], 0, 120)
-            gain_diamond()
-            my_player.find_touch_skewing(['everyweek'], 0, 240)
-            gain_diamond()
-            my_player.find_touch_skewing(['everyweek'], 0, 360)
-            gain_diamond()
-            my_player.find_touch(['home'])
+        # 收米
+        if my_player.exist(['shop']):
+            my_player.find_touch_skewing(['shop'], 90, 104)
+            my_player.find_touch(['destroy'])
+            if my_player.exist(['start_destroy']):
+                my_player.find_touch(['start_destroy', 'REWARD'])
+            my_player.find_touch(['cancel', 'gain_reward', 'REWARD_2', 'REWARD', 'lobby'])
+
+        # 友情点
+        if my_player.exist(['friend']):
+            my_player.find_touch(['friend', 'give', 'confirm', 'close'])
+
+        # 邮箱
+        if my_player.exist(['mail']):
+            my_player.find_touch(['mail'])
+            time.sleep(my_player.interval)
+            my_player.find_touch(['gain_mail'])
+            time.sleep(my_player.interval)
+            my_player.find_touch(['REWARD', 'close_3'])
+
         # 特殊竞技场收米
         if my_player.exist(['ark']):
             my_player.find_touch(['ark', 'ark', 'arena', 'arena', 'special_arena', 'special_arena'])
@@ -82,18 +85,21 @@ def gain_rewards(arena_shop_task):
             time.sleep(my_player.interval)
             my_player.find_touch(['gain_reward_2', 'REWARD', 'home'])
             time.sleep(my_player.interval)
-        # 任务委托收米
+
+        # 派遣收米
         if my_player.exist(['base']):
             my_player.find_touch(['base'])
             time.sleep(my_player.interval * 2.5)
             my_player.find_touch(['board', 'gain_all', 'REWARD', 'dispatch_all', 'dispatch', 'home', 'home'])
             time.sleep(my_player.interval * 2.5)
+
         # 日常任务
         if my_player.exist(['mission']):
             my_player.find_touch_skewing(['mission'], 180, 155)
             my_player.find_touch(['gain_all_2', 'gain_all_2', 'REWARD', 'close_2'])
             if my_player.exist(['000']):
                 break
+
         # 露菲弹窗广告
         if my_player.exist(['ad']):
             my_player.find_touch(['ad', 'confirm_2'])
@@ -287,7 +293,7 @@ def single_raids():
             break
 
 
-def continuous_click():
+def continuous_click():  # 按Q切换至持续射击模式
     while True:
         if keyboard.is_pressed('q'):
             my_player.continuous_click()
@@ -325,3 +331,49 @@ def handle_buff():
     if my_player.exist(['repeated_buff']):
         my_player.find_touch_skewing(['repeated_buff'], 90, 300)
         my_player.find_touch(['confirm_4'])
+
+
+def home():
+    # 注意开局弹窗，以及中途的露菲广告，露菲广告会出现在每日收米后和爬塔后
+    # if 有home图标，就点击
+    # 付费商店收米
+    # 商店收米
+    # 每日收米
+    # 友情点
+    # 邮箱
+
+    return 0
+
+
+def base():
+    # if 不在home就先回到home再点击base，else 点击base
+    # 派遣
+    # 每日收米
+    # 咨询
+    # 回到home
+
+    return 0
+
+
+def ark():
+    # if 不在home就先回到home再点击ark，else 点击ark
+    # 模拟室
+    # 打boss
+    # 竞技场
+    # 爬塔
+    # 回到home
+
+    return 0
+
+
+def normal_activity():
+    # if 不在home就先回到home再点击activity，else 点击activity
+    # 挑战
+    # 闯关
+    # 任务
+
+    return 0
+
+
+def single_raid():
+    return 0
