@@ -154,6 +154,7 @@ class Window(QtWidgets.QWidget):
             if self.click_thread:
                 self.click_thread.terminate()
 
+    # 改变分辨率
     @staticmethod
     def correct_window():
         window_list = pygetwindow.getWindowsWithTitle('NIKKE')

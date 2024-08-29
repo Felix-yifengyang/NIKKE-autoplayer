@@ -333,47 +333,4 @@ def handle_buff():
         my_player.find_touch(['confirm_4'])
 
 
-def home():
-    # 注意开局弹窗，以及中途的露菲广告，露菲广告会出现在每日收米后和爬塔后
-    # if 有home图标，就点击
-    # 付费商店收米
-    # 商店收米
-    # 每日收米
-    # 友情点
-    # 邮箱
 
-    return 0
-
-
-def base():
-    # if 不在home就先回到home再点击base，else 点击base
-    # 派遣
-    # 每日收米
-    # 咨询
-    # 回到home
-
-    return 0
-
-
-def ark():
-    # if 不在home就先回到home再点击ark，else 点击ark
-    # 模拟室
-    # 打boss
-    # 竞技场
-    # 爬塔
-    # 回到home
-
-    return 0
-
-
-def normal_activity():
-    # if 不在home就先回到home再点击activity，else 点击activity
-    # 挑战
-    # 闯关
-    # 任务
-
-    return 0
-
-
-def single_raid():
-    return 0
