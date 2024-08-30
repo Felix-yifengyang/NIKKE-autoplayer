@@ -323,7 +323,7 @@ def auto_all(auto_task_list, arena_shop_task, overclocking):
         time.sleep(my_player.interval)
 
 
-def handle_buff():
+def handle_buff() -> object:
     if my_player.exist(['exceeded_buff']):
         my_player.find_touch_skewing(['exceeded_buff'], 90, 300)
         my_player.find_touch(['confirm_4'])

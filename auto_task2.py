@@ -1,6 +1,7 @@
 import time
-import keyboard
 from opencv import Player
+import pygetwindow as gw
+import pyautogui
 
 my_player = Player(accuracy=0.8)
 
@@ -14,83 +15,188 @@ def change_click(click_pattern):
     my_player.change_click(click_pattern)
 
 
-def gain_diamond():
-    if my_player.exist(['free_diamond']):
-        my_player.find_touch(['free_diamond', 'REWARD'])
+# 点击NIKKE边缘处的地方，用于退出弹窗
+def click_edge(window_title='NIKKE'):
+    # 获取窗口
+    window = gw.getWindowsWithTitle(window_title)[0]
+    # 获取窗口的位置和大小
+    left, top, width, height = window.left, window.top, window.width, window.height
+    # 计算顶部中间位置
+    x = left + width // 2 - 50
+    y = top + 50  # 边缘稍微下面一点
+    # 移动鼠标并点击
+    pyautogui.click(x, y)
+    print("已点击边缘位置")
+
+
+def click_here(x, y):
+    pyautogui.click(x, y)
+
+
+# 返回大厅
+def check_home():
+    click_edge()
+    # if 有home图标，就点击
+    if my_player.exist('home'):  # 如果不在home就回到home
+        my_player.find_touch('home')
+        time.sleep(my_player.interval * 2.5)
+    elif my_player.exist('close'):
+        my_player.find_touch('close')
+
+
+# 激活NIKKE窗口
+def activate_window():
+    # 获取指定窗口并激活
+    window = gw.getWindowsWithTitle('NIKKE')[0]
+    window.activate()
+    window.resizeTo(1037, 811)
+
+
+# 处理模拟室中获得的buff
+def gain_buff():
+    # if my_player.exist(['SSR']):
+    #     my_player.find_touch(['SSR', 'confirm', 'confirm_2'])
+    # elif my_player.exist(['SR']):
+    #     my_player.find_touch(['SR', 'confirm', 'confirm_2'])
+    # elif my_player.exist(['R']):
+    #     my_player.find_touch(['R', 'confirm', 'confirm_2'])
+    if my_player.exist(['no_choose_2']):
+        my_player.find_touch(['no_choose_2', 'confirm'])
 
 
 def home():
-    while True:
-        # 注意开局弹窗，以及中途的露菲广告，露菲广告会出现在每日收米后和爬塔后
-        # if 有home图标，就点击
-        if my_player.exist('home'):  # 如果不在home就回到home
-            my_player.find_touch('home')
-            time.sleep(my_player.interval)
+    # 注意开局弹窗，以及中途的露菲广告，露菲广告会出现在每日收米后和爬塔后
+    check_home()
 
-        # 付费商店收米
-        if my_player.exist('pay_shop'):
-            my_player.find_touch(['pay_shop'])
-            time.sleep(my_player.interval)
-            if my_player.exist(["restrict"]):  # 查看是否有年龄限制
-                my_player.find_touch_skewing(['restrict'], 90, 110)  # 点击已成年 # distance需要修改
-                my_player.find_touch(['confirm_10'])  # 点击确认
+    # 付费商店收米
+    if my_player.exist('pay_shop'):
+        my_player.find_touch(['pay_shop'])
+        time.sleep(my_player.interval)
 
-                my_player.find_touch(['gift'])
-                my_player.find_touch_skewing(['everyday'], 0, 120)
-                gain_diamond()
-                my_player.find_touch_skewing(['everyweek'], 0, 240)
-                gain_diamond()
-                my_player.find_touch_skewing(['everyweek'], 0, 360)
-                gain_diamond()
-                my_player.find_touch(['home'])
+        if my_player.exist(["restrict"]):  # 查看是否有年龄限制
+            my_player.find_touch_skewing(['restrict'], 90, 110)  # 点击已成年 # distance需要修改
+            my_player.find_touch(['confirm_10'])  # 点击确认
 
-        # 商店收米
-        if my_player.exist(['shop']):
-            my_player.find_touch(['shop', '0'])
-            my_player.find_touch(['buy', 'REWARD'])
-            my_player.find_touch(['home'])
-            time.sleep(my_player.interval)
+        my_player.find_touch(['gift'])
+        my_player.find_touch(['everyday'])
+        my_player.find_touch(['everyday_free'])
+        if my_player.find_touch(['everyday_free']):
+            click_edge()  # 不过不行就换成 my_player.find_touch(['REWARD'])
+        my_player.find_touch(['home'])
+        time.sleep(my_player.interval)
+        check_home()
 
-        # 每日收米
-        if my_player.exist(['mi']):
-            my_player.find_touch('mi')
-            my_player.find_touch(['destroy'])
-            if my_player.exist(['start_destroy']):
-                my_player.find_touch(['start_destroy', 'REWARD'])
-            my_player.find_touch(['cancel', 'gain_reward', 'REWARD_2', 'REWARD', 'lobby'])
+    # 商店收米
+    if my_player.exist(['shop']):
+        my_player.find_touch(['shop', '0'])
+        my_player.find_touch(['buy', 'REWARD'])
+        my_player.find_touch(['home'])
+        time.sleep(my_player.interval)
+        check_home()
 
-        # 友情点
-        if my_player.exist(['friend']):
-            my_player.find_touch(['friend', 'give', 'confirm', 'close'])
+    # 每日收米
+    if my_player.exist(['outpost']):
+        my_player.find_touch('outpost')
+        my_player.find_touch(['destroy'])
+        if my_player.exist(['start_destroy']):
+            my_player.find_touch(['start_destroy', 'REWARD'])
+        my_player.find_touch(['cancel', 'gain_reward', 'REWARD_2'])
+        check_home()
 
-        # 邮箱
-        if my_player.exist(['mail']):
-            my_player.find_touch(['mail'])
-            time.sleep(my_player.interval)
-            my_player.find_touch(['gain_mail'])
-            time.sleep(my_player.interval)
-            my_player.find_touch(['REWARD', 'close_3'])
+    # 友情点
+    if my_player.exist(['friend']):
+        my_player.find_touch(['friend', 'give', 'confirm', 'close'])
+        check_home()
+
+    # 邮箱
+    if my_player.exist(['mail']):
+        my_player.find_touch(['mail'])
+        my_player.find_touch(['gain_mail'])
+        my_player.find_touch(['REWARD', 'close'])
 
 
 def base():
     # if 不在home就先回到home再点击base，else 点击base
-    # 派遣
-    # 每日收米
-    # 咨询
-    # 回到home
+    check_home()
+    if my_player.exist('base'):
+        my_player.find_touch('base')
+        time.sleep(my_player.interval * 2.5)
 
-    return 0
+        # 派遣
+        my_player.find_touch(['board', 'gain_all', 'REWARD', 'dispatch_all', 'dispatch'])
+        click_edge()
+
+        # 第二次收米
+        if my_player.exist('outpost_ark'):
+            my_player.find_touch('outpost_ark')
+            my_player.find_touch(['gain_reward', 'REWARD_2'])
+
+        # 咨询
+        if my_player.exist('center'):
+            my_player.find_touch(['center', 'enter', 'consult'])
+            my_player.find_touch(['taolesi', 'fast_consult', 'confirm', 'back'])
+            my_player.find_touch(['huangguan', 'fast_consult', 'confirm', 'back'])
 
 
 def ark():
     # if 不在home就先回到home再点击ark，else 点击ark
-    # 模拟室
-    # 打boss
-    # 竞技场
-    # 爬塔
+    check_home()
+    if my_player.exist('ark'):
+        my_player.find_touch('ark')
+        time.sleep(my_player.interval)
+        # 模拟室
+        # 进入
+        my_player.find_touch(['simulation_room', 'start_simulation_1', 'difficulty_5',
+                              'grade_C', 'start_simulation_2'])
+        # 开打
+        # normal battle 和 hard battle 经常弄错
+        while True:
+            if my_player.exist('normal_battle'):
+                my_player.find_touch('normal_battle')
+                if my_player.exist('quick_battle'):
+                    my_player.find_touch('quick_battle')
+                else:
+                    my_player.find_touch('enter_battle')
+                    time.sleep(my_player.interval * 16)
+                    while True:
+                        if my_player.exist('next_step'):
+                            my_player.find_touch('next_step')
+                            time.sleep(my_player.interval)
+                            break
+                gain_buff()
+
+            elif my_player.exist('cure_room'):
+                my_player.find_touch(['cure_room', 'cure', 'confirm',
+                                      'confirm_2', 'confirm'])
+
+            elif my_player.exist('boss_battle'):
+                my_player.find_touch(['boss_battle', 'enter_battle'])
+                time.sleep(my_player.interval * 16)
+                while True:
+                    if my_player.exist('next_step'):
+                        my_player.find_touch('next_step')
+                        time.sleep(my_player.interval * 1.5)
+                        my_player.find_touch(['end_simulation', 'confirm', 'no_choose', 'confirm_3', 'confirm'])
+                        break
+                break
+            my_player.find_touch('back')
+
+        # 打boss，待修工
+
+        # 竞技场，我认为不需要点击，可以换成后台变动后提示音
+        my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
+        # 爬塔
+        my_player.find_touch('tower')
+        my_player.find_touch_skewing('open', 90, 50)
+        window = gw.getWindowsWithTitle('NIKKE')[0]
+        left, top, width, height = window.left, window.top, window.width, window.height
+        click_here(left + width // 2, top + height // 2 - 50)
+        # 不知为何检测不到enter_battle_2
+        my_player.find_touch('enter_battle_2')
+        time.sleep(my_player.interval * 3)
+        my_player.find_touch(['esc', 'giveup_battle', 'back_2'])
     # 回到home
 
-    return 0
 
 
 def normal_activity():
@@ -104,3 +210,8 @@ def normal_activity():
 
 def single_raid():
     return 0
+
+
+if __name__ == '__main__':
+    activate_window()
+    ark()
