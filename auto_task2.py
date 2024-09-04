@@ -29,6 +29,7 @@ def click_edge(window_title='NIKKE'):
     print("已点击边缘位置")
 
 
+# 点击某个固定位置
 def click_here(x, y):
     pyautogui.click(x, y)
 
@@ -79,9 +80,7 @@ def home():
 
         my_player.find_touch(['gift'])
         my_player.find_touch(['everyday'])
-        my_player.find_touch(['everyday_free'])
-        if my_player.find_touch(['everyday_free']):
-            click_edge()  # 不过不行就换成 my_player.find_touch(['REWARD'])
+        my_player.find_touch(['everyday_free', 'REWARD'])
         my_player.find_touch(['home'])
         time.sleep(my_player.interval)
         check_home()
@@ -153,8 +152,8 @@ def ark():
         while True:
             if my_player.exist('normal_battle'):
                 my_player.find_touch('normal_battle')
-                if my_player.exist('quick_battle'):
-                    my_player.find_touch('quick_battle')
+                if my_player.exist('quick_battle_2'):
+                    my_player.find_touch('quick_battle_2')
                 else:
                     my_player.find_touch('enter_battle')
                     time.sleep(my_player.interval * 16)
@@ -179,39 +178,41 @@ def ark():
                         my_player.find_touch(['end_simulation', 'confirm', 'no_choose', 'confirm_3', 'confirm'])
                         break
                 break
-            my_player.find_touch('back')
 
-        # 打boss，待修工
+        # 拦截战
+        my_player.find_touch('back')
+        if my_player.exist('interception'):
+            my_player.find_touch(['interception', 'challenge', 'enter_battle_3'])
+            time.sleep(my_player.interval * 16)
+            while True:
+                if my_player.exist('next_step'):
+                    my_player.find_touch('next_step')
+                    break
+            for i in range(0, 2):
+                my_player.find_touch(['quick_battle', 'next_step'])
 
-        # 竞技场，我认为不需要点击，可以换成后台变动后提示音
-        my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
-        # 爬塔
-        my_player.find_touch('tower')
-        my_player.find_touch_skewing('open', 90, 50)
-        window = gw.getWindowsWithTitle('NIKKE')[0]
-        left, top, width, height = window.left, window.top, window.width, window.height
-        click_here(left + width // 2, top + height // 2 - 50)
-        # 不知为何检测不到enter_battle_2
-        my_player.find_touch('enter_battle_2')
-        time.sleep(my_player.interval * 3)
-        my_player.find_touch(['esc', 'giveup_battle', 'back_2'])
+        # 竞技场奖励
+        my_player.find_touch('back')
+        if my_player.exist('special_reward'):
+            my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
+        # my_player.find_touch(['arena','rookie_arena'])
+        # 特殊竞技场
+        if my_player.exist('arena'):
+            my_player.find_touch(['arena', 'special_arena', 'special_arena'])
+            for i in range(0, 2):
+                while True:
+                    if my_player.exist('update_menu'):
+                        my_player.find_touch_skewing('update_menu', 90, 250)
+                        break
+                my_player.find_touch('enter_battle_2')
+                while True:
+                    if my_player.exist('next_step_2'):
+                        my_player.find_touch('next_step_2')
+                        break
+        # 爬塔，待修工
     # 回到home
-
-
-
-def normal_activity():
-    # if 不在home就先回到home再点击activity，else 点击activity
-    # 挑战
-    # 闯关
-    # 任务
-
-    return 0
-
-
-def single_raid():
-    return 0
 
 
 if __name__ == '__main__':
     activate_window()
-    ark()
+
