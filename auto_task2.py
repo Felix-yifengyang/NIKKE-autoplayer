@@ -2,6 +2,7 @@ import time
 from opencv import Player
 import pygetwindow as gw
 import pyautogui
+import keyboard
 
 my_player = Player(accuracy=0.8)
 
@@ -189,16 +190,30 @@ def ark():
                     my_player.find_touch('next_step')
                     break
             for i in range(0, 2):
-                my_player.find_touch(['quick_battle', 'next_step'])
+                time.sleep(my_player.interval)
+                my_player.find_touch(['quick_battle', 'next_step', 'next_step'])
 
-        # 竞技场奖励
+        # 竞技场
         my_player.find_touch('back')
         if my_player.exist('special_reward'):
             my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
-        # my_player.find_touch(['arena','rookie_arena'])
-        # 特殊竞技场
         if my_player.exist('arena'):
-            my_player.find_touch(['arena', 'special_arena', 'special_arena'])
+            my_player.find_touch(['arena', 'rookie_arena', 'rookie_arena'])
+            for i in range(0, 5):
+                while True:
+                    if my_player.exist('update_menu'):
+                        my_player.find_touch_skewing('update_menu', 90, 250)
+                        break
+                my_player.find_touch(['enter_battle_2', 'enter_battle_2'])
+                while True:
+                    if my_player.exist('next_step_3'):
+                        keyboard.press_and_release('Esc')
+                        break
+
+            keyboard.press_and_release('Esc')
+
+            # 特殊竞技场
+            my_player.find_touch(['special_arena', 'special_arena'])
             for i in range(0, 2):
                 while True:
                     if my_player.exist('update_menu'):
@@ -215,4 +230,5 @@ def ark():
 
 if __name__ == '__main__':
     activate_window()
+
 
