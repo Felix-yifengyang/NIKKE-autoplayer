@@ -17,22 +17,16 @@ def change_click(click_pattern):
 
 
 # 点击NIKKE边缘处的地方，用于退出弹窗
-def click_edge(window_title='NIKKE'):
-    # 获取窗口
-    window = gw.getWindowsWithTitle(window_title)[0]
-    # 获取窗口的位置和大小
-    left, top, width, height = window.left, window.top, window.width, window.height
-    # 计算顶部中间位置
-    x = left + width // 2 - 50
-    y = top + 50  # 边缘稍微下面一点
-    # 移动鼠标并点击
-    pyautogui.click(x, y)
+def click_edge():
+    left, top, width, height = get_size()
+    pyautogui.click(left + width // 2, top + 100)
     print("已点击边缘位置")
 
 
 # 点击某个固定位置
 def click_here(x, y):
     pyautogui.click(x, y)
+    print(f"已点击位置{x},{y}")
 
 
 # 返回大厅
@@ -44,6 +38,12 @@ def check_home():
         time.sleep(my_player.interval * 2.5)
     elif my_player.exist('close'):
         my_player.find_touch('close')
+
+
+def get_size():
+    window = gw.getWindowsWithTitle('NIKKE')[0]
+    left, top, width, height = window.left, window.top, window.width, window.height
+    return left, top, width, height
 
 
 # 激活NIKKE窗口
@@ -64,6 +64,22 @@ def gain_buff():
     #     my_player.find_touch(['R', 'confirm', 'confirm_2'])
     if my_player.exist(['no_choose_2']):
         my_player.find_touch(['no_choose_2', 'confirm'])
+
+
+def climb_tower():
+    left, top, width, height = get_size()
+    click_here(left + width // 2, top + height // 2 - 50)
+
+    time.sleep(my_player.interval)
+    my_player.find_touch('enter_battle_4')
+    time.sleep(my_player.interval * 5)
+    keyboard.press_and_release('Esc')
+    time.sleep(my_player.interval)
+    my_player.find_touch('giveup_battle')
+    time.sleep(my_player.interval)
+    keyboard.press_and_release('Esc')
+    time.sleep(my_player.interval * 2)
+    check_home()
 
 
 def home():
@@ -183,7 +199,7 @@ def ark():
         # 拦截战
         my_player.find_touch('back')
         if my_player.exist('interception'):
-            my_player.find_touch(['interception', 'challenge', 'enter_battle_3'])
+            my_player.find_touch(['interception', 'challenge', 'enter_battle_3'])  # 这里有问题，检测不到challenge
             time.sleep(my_player.interval * 16)
             while True:
                 if my_player.exist('next_step'):
@@ -194,7 +210,7 @@ def ark():
                 my_player.find_touch(['quick_battle', 'next_step', 'next_step'])
 
         # 竞技场
-        my_player.find_touch('back')
+        my_player.find_touch(['back', 'back'])
         if my_player.exist('special_reward'):
             my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
         if my_player.exist('arena'):
@@ -202,7 +218,7 @@ def ark():
             for i in range(0, 5):
                 while True:
                     if my_player.exist('update_menu'):
-                        my_player.find_touch_skewing('update_menu', 90, 250)
+                        my_player.find_touch_skewing('update_menu', 90, 270)
                         break
                 my_player.find_touch(['enter_battle_2', 'enter_battle_2'])
                 while True:
@@ -210,6 +226,8 @@ def ark():
                         keyboard.press_and_release('Esc')
                         break
 
+            keyboard.press_and_release('Esc')
+            time.sleep(my_player.interval)
             keyboard.press_and_release('Esc')
 
             # 特殊竞技场
@@ -222,13 +240,27 @@ def ark():
                 my_player.find_touch('enter_battle_2')
                 while True:
                     if my_player.exist('next_step_2'):
-                        my_player.find_touch('next_step_2')
+                        keyboard.press_and_release('Esc')
                         break
-        # 爬塔，待修工
+
+        # 爬塔
+        keyboard.press_and_release('Esc')
+        time.sleep(my_player.interval)
+        keyboard.press_and_release('Esc')
+        if my_player.exist('tower'):
+            my_player.find_touch('tower')
+            if my_player.exist('tower'):
+                my_player.find_touch('tower')
+                if my_player.exist('label_1'):
+                    my_player.find_touch('tower_3')
+                    time.sleep(my_player.interval)
+
+                    climb_tower()
+                # if my_player.exist('label_2'):
+                #     my_player.find_touch('tower_x')
     # 回到home
 
 
 if __name__ == '__main__':
     activate_window()
-
 

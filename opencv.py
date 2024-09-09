@@ -1,6 +1,7 @@
 import time, os, random, math
 import cv2, numpy, pyautogui
 from PIL import ImageGrab
+import pygetwindow as gw
 
 # 桌面模式下的鼠标操作延迟，程序已经设置随机延迟这里无需设置修改
 pyautogui.PAUSE = 0.001
