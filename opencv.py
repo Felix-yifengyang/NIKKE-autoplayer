@@ -56,6 +56,40 @@ class Player(object):
         y += random.randint(-range, range)
         return (x, y)
 
+    # 点击NIKKE边缘处的地方，用于退出弹窗
+    def click_edge(self):
+        left, top, width, height = self.get_size()
+        pyautogui.click(left + width // 2, top + 100)
+        print("已点击边缘位置")
+
+    # 点击某个固定位置
+    def click_here(self, x, y):
+        pyautogui.click(x, y)
+        print(f"已点击位置{x},{y}")
+
+    # 返回大厅
+    def check_home(self):
+        self.click_edge()
+        # if 有home图标，就点击
+        if self.exist('home'):  # 如果不在home就回到home
+            self.find_touch('home')
+            time.sleep(self.interval * 2.5)
+        elif self.exist('close'):
+            self.find_touch('close')
+
+    def get_size(self):
+        window = gw.getWindowsWithTitle('NIKKE')[0]
+        left, top, width, height = window.left, window.top, window.width, window.height
+        return left, top, width, height
+
+    # 激活NIKKE窗口
+    def activate_window(self):
+        # 获取指定窗口并激活
+        window = gw.getWindowsWithTitle('NIKKE')[0]
+        window.activate()
+        window.resizeTo(1037, 811)
+        print('已打开NIKKE')
+
     # 或pyautogui鼠标点击，带偏移与延迟
     def touch(self, position):
         x, y = self.random_offset(position)  # 对position坐标进行随机偏移

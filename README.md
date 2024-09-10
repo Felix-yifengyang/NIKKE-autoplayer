@@ -4,13 +4,14 @@
 ## 文件夹：
 - ocr: 使用ocr_main运行，与opencv无关，有单独的requirements.txt
 - screen：screen_shot函数第二个argument可以引入文件名，将截图保存在screen中
+- image：ui界面的图片
 - **wanted**：用作opencv识别（主要文件夹）
 
 ## 文件：
-- auto_task: 是[NIKKE-helper](https://github.com/gdxxp/NIKKE-helper/tree/main)里的原文件，供参考
-- auto_task2： 是我改版后的版本，不一定更好用，但更适合本人，暂时作为main文件直接运行
-- dialog/ui/main： 是ui界面相关文件，暂时未施工
-- opencv: 是脚本的基本算法
+- auto_task.py: 改版后的版本，可以直接运行
+- ui.py: 是ui界面相关文件
+- main.py: ui与功能的结合
+- opencv.py: 是脚本的基本算法
 
 ## 注意：
 - OCR模式不适合NIKKE，因为很多选项不是文字而是图标
@@ -19,6 +20,4 @@
 - 用管理员权限打开CMD来运行程序
 
 ## Todo：
-- 更新wanted的所有图片
-- 完善auto_task2
-- 研究ui界面
+- 完善ark()
