@@ -19,5 +19,9 @@
 - 游戏窗口需要在前台
 - 用管理员权限打开CMD来运行程序
 
+## 预览:
+![预览1](./image/example_1.png)
+![预览2](./image/example_2.png)
+
 ## Todo：
 - 完善ark()
