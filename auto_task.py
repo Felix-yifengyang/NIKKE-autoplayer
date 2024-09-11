@@ -98,16 +98,17 @@ def base():
         my_player.find_touch(['board', 'gain_all', 'REWARD', 'dispatch_all', 'dispatch'])
         my_player.click_edge()
 
-        # 第二次收米
-        if my_player.exist('outpost_ark'):
-            my_player.find_touch('outpost_ark')
-            my_player.find_touch(['gain_reward', 'REWARD_2'])
-
         # 咨询
         if my_player.exist('center'):
             my_player.find_touch(['center', 'enter', 'consult'])
             my_player.find_touch(['taolesi', 'fast_consult', 'confirm', 'back'])
             my_player.find_touch(['huangguan', 'fast_consult', 'confirm', 'back'])
+
+        # 第二次收米
+        my_player.find_touch(['back', 'back', 'close_2'])
+        if my_player.exist('outpost_ark'):
+            my_player.find_touch('outpost_ark')
+            my_player.find_touch(['gain_reward', 'REWARD_2'])
 
 
 def ark():
