@@ -155,7 +155,12 @@ def ark():
         # 拦截战
         my_player.find_touch('back')
         if my_player.exist('interception'):
-            my_player.find_touch(['interception', 'challenge', 'enter_battle_3'])
+            my_player.find_touch('interception')
+            while True:
+                if my_player.exist('challenge'):
+                    my_player.find_touch('challenge')
+                    break
+            my_player.find_touch('enter_battle_3')
             time.sleep(my_player.interval * 16)
             while True:
                 if my_player.exist('next_step'):
@@ -182,11 +187,11 @@ def ark():
                         keyboard.press_and_release('Esc')
                         break
 
-            keyboard.press_and_release('Esc')
-            time.sleep(my_player.interval)
-            keyboard.press_and_release('Esc')
-
             # 特殊竞技场
+            while True:
+                if my_player.exist('back_2'):
+                    my_player.find_touch(['back_2'])
+                    break
             my_player.find_touch(['special_arena', 'special_arena'])
             for i in range(0, 2):
                 while True:
@@ -213,8 +218,14 @@ def ark():
                 my_player.find_touch('tower_1')
                 time.sleep(my_player.interval)
                 climb_tower()
-                # if my_player.exist('label_3'):
-                #     my_player.find_touch('tower_4')
+            if my_player.exist('label_3'):
+                my_player.find_touch('tower_4')
+                time.sleep(my_player.interval)
+                climb_tower()
+            # if my_player.exist('label_4'):
+            #     my_player.find_touch('tower_3')
+            #     time.sleep(my_player.interval)
+            #     climb_tower()
 
 
 def auto_all(auto_task_list):
@@ -231,3 +242,4 @@ def auto_all(auto_task_list):
 
 if __name__ == '__main__':
     my_player.activate_window()
+
