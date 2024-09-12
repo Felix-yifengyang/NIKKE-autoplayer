@@ -101,8 +101,17 @@ def base():
         # 咨询
         if my_player.exist('center'):
             my_player.find_touch(['center', 'enter', 'consult'])
-            my_player.find_touch(['taolesi', 'fast_consult', 'confirm', 'back'])
-            my_player.find_touch(['huangguan', 'fast_consult', 'confirm', 'back'])
+            my_player.find_touch(['taolesi', 'fast_consult', 'confirm'])
+            time.sleep(my_player.interval)
+            if my_player.exist('rank_up'):
+                my_player.click_edge()
+                time.sleep(my_player.interval)
+            my_player.find_touch(['back', 'huangguan', 'fast_consult', 'confirm'])
+            time.sleep(my_player.interval)
+            if my_player.exist('rank_up'):
+                my_player.click_edge()
+                time.sleep(my_player.interval)
+            my_player.find_touch('back')
 
         # 第二次收米
         my_player.find_touch(['back', 'back', 'close_2'])
@@ -206,9 +215,7 @@ def ark():
                         break
 
         # 爬塔
-        keyboard.press_and_release('Esc')
-        time.sleep(my_player.interval)
-        keyboard.press_and_release('Esc')
+        my_player.find_touch(['back_2', 'back_3'])
         if my_player.exist('tower'):
             my_player.find_touch('tower')
             if my_player.exist('label_1'):
@@ -223,10 +230,6 @@ def ark():
                 my_player.find_touch('tower_4')
                 time.sleep(my_player.interval)
                 climb_tower()
-            # if my_player.exist('label_4'):
-            #     my_player.find_touch('tower_3')
-            #     time.sleep(my_player.interval)
-            #     climb_tower()
 
 
 def auto_all(auto_task_list):

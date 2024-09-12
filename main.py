@@ -24,9 +24,8 @@ class TaskThread(QtCore.QThread):  # 每个 TaskThread 对象都代表一个独�
         elif self.task_number == 2:
             auto_task.ark()
         elif self.task_number == 3:
-            while True:
-                auto_task.auto_all(auto_task_list)
-                time.sleep(1)
+            auto_task.auto_all(auto_task_list)
+            time.sleep(1)
 
 
 class Window(QtWidgets.QWidget):
