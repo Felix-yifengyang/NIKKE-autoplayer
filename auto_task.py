@@ -99,22 +99,24 @@ def base():
         my_player.click_edge()
 
         # 咨询
-        if my_player.exist('center'):
-            my_player.find_touch(['center', 'enter', 'consult'])
-            my_player.find_touch(['taolesi', 'fast_consult', 'confirm'])
+        while True:
+            if my_player.find_touch('center'):
+                break
+        my_player.find_touch(['enter', 'consult'])
+        my_player.find_touch(['taolesi', 'fast_consult', 'confirm'])
+        time.sleep(my_player.interval)
+        if my_player.exist('rank_up'):
+            my_player.click_edge()
             time.sleep(my_player.interval)
-            if my_player.exist('rank_up'):
-                my_player.click_edge()
-                time.sleep(my_player.interval)
-            my_player.find_touch(['back', 'huangguan', 'fast_consult', 'confirm'])
+        my_player.find_touch(['back', 'huangguan', 'fast_consult', 'confirm'])
+        time.sleep(my_player.interval)
+        if my_player.exist('rank_up'):
+            my_player.click_edge()
             time.sleep(my_player.interval)
-            if my_player.exist('rank_up'):
-                my_player.click_edge()
-                time.sleep(my_player.interval)
-            my_player.find_touch('back')
+        my_player.find_touch('back')
 
         # 第二次收米
-        my_player.find_touch(['back', 'back', 'close_2'])
+        my_player.find_touch(['back_4', 'back_3', 'close_2', 'close_2'])
         if my_player.exist('outpost_ark'):
             my_player.find_touch('outpost_ark')
             my_player.find_touch(['gain_reward', 'REWARD_2'])
@@ -215,6 +217,7 @@ def ark():
                         break
 
         # 爬塔
+        time.sleep(my_player.interval)
         my_player.find_touch(['back_2', 'back_3'])
         if my_player.exist('tower'):
             my_player.find_touch('tower')
@@ -222,11 +225,19 @@ def ark():
                 my_player.find_touch('tower_3')
                 time.sleep(my_player.interval)
                 climb_tower()
-            if my_player.exist('label_2'):
+            elif my_player.exist('label_2'):
                 my_player.find_touch('tower_1')
                 time.sleep(my_player.interval)
                 climb_tower()
-            if my_player.exist('label_3'):
+            elif my_player.exist('label_3'):
+                my_player.find_touch('tower_4')
+                time.sleep(my_player.interval)
+                climb_tower()
+            elif my_player.exist('label_4'):
+                my_player.find_touch('tower_2')
+                time.sleep(my_player.interval)
+                climb_tower()
+            elif my_player.exist('label_5'):
                 my_player.find_touch('tower_4')
                 time.sleep(my_player.interval)
                 climb_tower()
@@ -246,4 +257,3 @@ def auto_all(auto_task_list):
 
 if __name__ == '__main__':
     my_player.activate_window()
-
