@@ -237,10 +237,10 @@ def ark():
                 my_player.find_touch('tower_2')
                 time.sleep(my_player.interval)
                 climb_tower()
-            elif my_player.exist('label_5'):
-                my_player.find_touch('tower_4')
-                time.sleep(my_player.interval)
-                climb_tower()
+            # elif my_player.exist('label_5'):
+            #     my_player.find_touch('tower_4')
+            #     time.sleep(my_player.interval)
+            #     climb_tower()
 
 
 def auto_all(auto_task_list):
@@ -257,25 +257,3 @@ def auto_all(auto_task_list):
 
 if __name__ == '__main__':
     my_player.activate_window()
-    if my_player.exist('tower'):
-        my_player.find_touch('tower')
-        if my_player.exist('label_1'):
-            my_player.find_touch('tower_3')
-            time.sleep(my_player.interval)
-            climb_tower()
-        elif my_player.exist('label_2'):
-            my_player.find_touch('tower_1')
-            time.sleep(my_player.interval)
-            climb_tower()
-        elif my_player.exist('label_3'):
-            my_player.find_touch('tower_4')
-            time.sleep(my_player.interval)
-            climb_tower()
-        elif my_player.exist('label_4'):
-            my_player.find_touch('tower_2')
-            time.sleep(my_player.interval)
-            climb_tower()
-        # elif my_player.exist('label_5'):
-        #     my_player.find_touch('tower_4')
-        #     time.sleep(my_player.interval)
-        #     climb_tower()
