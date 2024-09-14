@@ -131,8 +131,8 @@ def ark():
         time.sleep(my_player.interval)
         # 模拟室
         # 进入
-        my_player.find_touch(['simulation_room', 'start_simulation_1', 'difficulty_5',
-                              'grade_C', 'start_simulation_2'])
+        my_player.find_touch(['simulation_room', 'start_simulation_1', 'start_simulation_3',
+                              'difficulty_5', 'grade_C', 'start_simulation_2'])
         # 开打
         # normal battle 和 hard battle 经常弄错
         while True:
@@ -218,7 +218,7 @@ def ark():
 
         # 爬塔
         time.sleep(my_player.interval)
-        my_player.find_touch(['back_2', 'back_3'])
+        my_player.find_touch(['back_4', 'back_3'])
         if my_player.exist('tower'):
             my_player.find_touch('tower')
             if my_player.exist('label_1'):
@@ -257,3 +257,25 @@ def auto_all(auto_task_list):
 
 if __name__ == '__main__':
     my_player.activate_window()
+    if my_player.exist('tower'):
+        my_player.find_touch('tower')
+        if my_player.exist('label_1'):
+            my_player.find_touch('tower_3')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_2'):
+            my_player.find_touch('tower_1')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_3'):
+            my_player.find_touch('tower_4')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_4'):
+            my_player.find_touch('tower_2')
+            time.sleep(my_player.interval)
+            climb_tower()
+        # elif my_player.exist('label_5'):
+        #     my_player.find_touch('tower_4')
+        #     time.sleep(my_player.interval)
+        #     climb_tower()
