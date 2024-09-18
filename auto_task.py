@@ -187,23 +187,29 @@ def ark():
         if my_player.exist('special_reward'):
             my_player.find_touch(['special_reward', 'gain_reward_2', 'REWARD'])
         if my_player.exist('arena'):
-            my_player.find_touch(['arena', 'rookie_arena', 'rookie_arena'])
-            for i in range(0, 5):
-                while True:
-                    if my_player.exist('update_menu'):
-                        my_player.find_touch_skewing('update_menu', 90, 270)
-                        break
-                my_player.find_touch(['enter_battle_2', 'enter_battle_2'])
-                while True:
-                    if my_player.exist('next_step_3'):
-                        keyboard.press_and_release('Esc')
-                        break
+            my_player.find_touch('arena')
+            my_player.change_interval(0.5)
+            my_player.find_touch('rookie_arena')
+            if my_player.exist('end'):
+                print('end')
+                my_player.change_interval(2.5)
+            else:
+                for i in range(0, 5):
+                    while True:
+                        if my_player.exist('update_menu'):
+                            my_player.find_touch_skewing('update_menu', 90, 270)
+                            break
+                    my_player.find_touch(['enter_battle_2', 'enter_battle_2'])
+                    while True:
+                        if my_player.exist('next_step_3'):
+                            keyboard.press_and_release('Esc')
+                            break
+                    while True:
+                        if my_player.exist('back_2'):
+                            my_player.find_touch(['back_2'])
+                            break
 
             # 特殊竞技场
-            while True:
-                if my_player.exist('back_2'):
-                    my_player.find_touch(['back_2'])
-                    break
             my_player.find_touch(['special_arena', 'special_arena'])
             for i in range(0, 2):
                 while True:
