@@ -204,10 +204,10 @@ def ark():
                         if my_player.exist('next_step_3'):
                             keyboard.press_and_release('Esc')
                             break
-                    while True:
-                        if my_player.exist('back_2'):
-                            my_player.find_touch(['back_2'])
-                            break
+                while True:
+                    if my_player.exist('back_2'):
+                        my_player.find_touch(['back_2'])
+                        break
 
             # 特殊竞技场
             my_player.find_touch(['special_arena', 'special_arena'])
@@ -217,6 +217,7 @@ def ark():
                         my_player.find_touch_skewing('update_menu', 90, 250)
                         break
                 my_player.find_touch('enter_battle_2')
+                time.sleep(my_player.interval)
                 while True:
                     if my_player.exist('next_step_2'):
                         keyboard.press_and_release('Esc')
