@@ -221,6 +221,7 @@ def ark():
                 while True:
                     if my_player.exist('next_step_2'):
                         keyboard.press_and_release('Esc')
+                        time.sleep(my_player.interval)
                         break
 
         # 爬塔
