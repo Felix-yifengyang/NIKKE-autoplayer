@@ -225,7 +225,7 @@ def ark():
                         break
 
         # 爬塔
-        time.sleep(my_player.interval)
+        time.sleep(my_player.interval * 2)
         my_player.find_touch(['back_4', 'back_3'])
         if my_player.exist('tower'):
             my_player.find_touch('tower')
