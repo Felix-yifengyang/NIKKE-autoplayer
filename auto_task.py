@@ -103,12 +103,12 @@ def base():
             if my_player.find_touch('center'):
                 break
         my_player.find_touch(['enter', 'consult'])
-        my_player.find_touch(['taolesi', 'fast_consult', 'confirm'])
+        my_player.find_touch(['taolesi', 'fast_consult', 'fast_consult', 'confirm'])
         time.sleep(my_player.interval)
         if my_player.exist('rank_up'):
             my_player.click_edge()
             time.sleep(my_player.interval)
-        my_player.find_touch(['back', 'huangguan', 'fast_consult', 'confirm'])
+        my_player.find_touch(['back', 'huangguan', 'fast_consult', 'fast_consult', 'confirm'])
         time.sleep(my_player.interval)
         if my_player.exist('rank_up'):
             my_player.click_edge()
@@ -221,34 +221,37 @@ def ark():
                 while True:
                     if my_player.exist('next_step_2'):
                         keyboard.press_and_release('Esc')
-                        time.sleep(my_player.interval)
                         break
 
         # 爬塔
-        time.sleep(my_player.interval * 2)
-        my_player.find_touch(['back_4', 'back_3'])
-        if my_player.exist('tower'):
-            my_player.find_touch('tower')
-            if my_player.exist('label_1'):
-                my_player.find_touch('tower_3')
-                time.sleep(my_player.interval)
-                climb_tower()
-            elif my_player.exist('label_2'):
-                my_player.find_touch('tower_1')
-                time.sleep(my_player.interval)
-                climb_tower()
-            elif my_player.exist('label_3'):
-                my_player.find_touch('tower_4')
-                time.sleep(my_player.interval)
-                climb_tower()
-            elif my_player.exist('label_4'):
-                my_player.find_touch('tower_2')
-                time.sleep(my_player.interval)
-                climb_tower()
-            # elif my_player.exist('label_5'):
-            #     my_player.find_touch('tower_4')
-            #     time.sleep(my_player.interval)
-            #     climb_tower()
+        while True:
+            if my_player.exist('back_4'):
+                my_player.find_touch(['back_4', 'back_3'])
+                break
+        while True:
+            if my_player.exist('tower'):
+                my_player.find_touch('tower')
+                break
+        if my_player.exist('label_1'):
+            my_player.find_touch('tower_3')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_2'):
+            my_player.find_touch('tower_1')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_3'):
+            my_player.find_touch('tower_4')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_4'):
+            my_player.find_touch('tower_2')
+            time.sleep(my_player.interval)
+            climb_tower()
+        elif my_player.exist('label_5'):
+            my_player.find_touch('tower_4')
+            time.sleep(my_player.interval)
+            climb_tower()
 
 
 def auto_all(auto_task_list):
