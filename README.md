@@ -23,5 +23,7 @@
 ![预览1](./image/example_1.png)
 ![预览2](./image/example_2.png)
 
-## Todo：
-- 完善ark()(特殊竞技场与爬塔的连接问题，以及爬塔的星期4567)
+## 运行：
+- 下载到本地
+- pip install -r requirement.txt下载相关依赖
+- 运行main
